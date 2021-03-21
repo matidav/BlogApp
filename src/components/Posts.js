@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { addPost } from '../actions'
@@ -11,38 +14,53 @@ const Posts = ({ dispatchAddPost, posts }) => {
   const [counter, counterSetter] = useState(1)
   return (
     <>
-      <div className = 'd-grid gap-2'>
-        <button className = 'add-post-btn btn btn-info' onClick = {() => editModeSetter( true )}> Add Post </button>
+      <div className="d-grid gap-2">
+        <button type="button" className="add-post-btn btn btn-info" onClick={() => editModeSetter(true)}> Add Post </button>
       </div>
-      { (editMode) ?
-        <div className = 'mb-3'>
-          <label className = 'form-label'> Title </label>
-          <textarea className = 'form-control' onChange = {e => titleSetter( e.target.value )}/>
-          <label className = 'form-label'> Image URL </label>
-          <input className = 'form-control' onChange = {e => imgURLSetter( e.target.value )}/>
-          <label className = 'form-label'> Description </label>
-          <textarea className = 'form-control' onChange = {e => dscSetter( e.target.value )}/>
-          <button className = 'btn btn-danger' onClick = {() => editModeSetter( false )}> Cancel </button>
-          <button className = 'btn btn-success' onClick = {() => {
-            counterSetter(counter+1)
-            dispatchAddPost(counter, title, imgURL, dsc)
-            editModeSetter(false)
-          }}> Post </button>
-        </div> : ''
-      }
-      <div className = 'container'>
-        {posts.map(post => <Post num = {post.idn} key = {post.idn} imageUrl = {post.img} title = {post.title} description = {post.description}/>)}
+      { (editMode)
+        ? (
+          <div className="mb-3">
+            <label className="form-label"> Title </label>
+            <textarea className="form-control" onChange={e => titleSetter(e.target.value)} />
+            <label className="form-label"> Image URL </label>
+            <input className="form-control" onChange={e => imgURLSetter(e.target.value)} />
+            <label className="form-label"> Description </label>
+            <textarea className="form-control" onChange={e => dscSetter(e.target.value)} />
+            <button type="button" className="btn btn-danger" onClick={() => editModeSetter(false)}> Cancel </button>
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={() => {
+                counterSetter(counter + 1)
+                dispatchAddPost(counter, title, imgURL, dsc)
+                editModeSetter(false)
+              }}
+            >
+              Post
+            </button>
+          </div>
+        ) : ''}
+      <div className="container">
+        {posts.map(post => (
+          <Post
+            num={post.idn}
+            key={post.idn}
+            imageUrl={post.img}
+            title={post.title}
+            description={post.description}
+          />
+        ))}
       </div>
     </>
   )
 }
 
 const mapDispatchToProps = dispatch => ({
-  dispatchAddPost: ( counter, title, imgURL, dsc ) => dispatch( addPost( counter, title, imgURL, dsc ) )
+  dispatchAddPost: (counter, title, imgURL, dsc) => dispatch(addPost(counter, title, imgURL, dsc)),
 })
 
 const mapStateToProps = state => ({
-  posts: state.post
+  posts: state.post,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts)
