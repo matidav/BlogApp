@@ -60,9 +60,9 @@ const Post = ({ num, imageUrl, title, description, dispatchDeletePost }) => {
             />
             <div className="postNum">
               Post
-              {num}
+              { num}
               :
-              {tit}
+              { tit}
             </div>
             <div>{descript}</div>
             <button type="button" className="btn btn-outline-primary" onClick={() => editModeSetter(true)}> Edit Post </button>
